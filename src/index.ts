@@ -2,6 +2,15 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
+import { questions } from "./questions";
+
+/**
+ * TODO: YOUTHBREAKER
+ * - Turn Switching
+ * - Question Picking - when turn changes, randomly pick a new question
+ * - Question Tracking - using answered object
+ * - UI
+ */
 
 // Initializing Express server
 const app = express();
@@ -23,12 +32,19 @@ type Turn = {
   };
 };
 
+type Answered = {
+  [key: number]: {
+    roomId: number;
+    answered: number[];
+  };
+};
+
 // List of all members in each room
 let list: List = {};
 // Keeping track of who's turn it is
 let turn: Turn = {};
 
-let questions = {};
+let answered: Answered = {};
 
 // Initializing Socket.io
 const io = new Server(server, {
@@ -51,6 +67,7 @@ io.on("connection", (socket: Socket) => {
 
     // If the room list doesn't exist, create it
     const allSockets = await io.in(roomId).fetchSockets();
+
     // If room doesn't exist in the list
     if (!list[roomId]) {
       let ids: string[] = [];
@@ -73,15 +90,27 @@ io.on("connection", (socket: Socket) => {
       };
     }
     console.log(list);
-    io.to(roomId).emit("admin", `${socket.id} joined`);
+
+    // if you are the first person, you are automatically going first
+    if (!turn[roomId] || !turn[roomId].member) {
+      turn[roomId] = {
+        member: socket.id,
+        index: list[roomId].members.findIndex((i) => i === socket.id),
+      };
+    }
+
+    io.to(roomId).emit("admin", { id: socket.id, turn: turn[roomId] });
+    console.log(turn, "turn");
   });
   socket.on("disconnecting", async () => {
     console.log("disconnect");
+
     // ! since it is disconnecting, it hasn't technically left yet. For some reason
     // ! If you add a promise, that'll give enough time for the socket to leave the room
     // ! After which you can update the list
     await Promise.resolve();
-    // When disconnecting, update the members in the room.
+    // When disconnecting, update the members in the room. The socket still exists so the data about roomId that we attached to it
+    // still exists
     let ids: string[] = [];
     const allSockets = await io.in(socket.data.roomId).fetchSockets();
     allSockets.forEach((i) => ids.push(i.id));
@@ -91,8 +120,18 @@ io.on("connection", (socket: Socket) => {
         members: ids,
       };
     }
+    // Give someone else the turn
+    let newTurn = Math.floor(Math.random() * (allSockets.length - 1));
 
-    console.log(list, "updated");
+    console.log(list, "wow");
+    turn[socket.data.roomId] = {
+      member: list[socket.data.roomId].members[newTurn],
+      index: newTurn,
+    };
+
+    console.log(turn, "updated turn");
+
+    console.log(list, "updated list");
   });
 });
 
