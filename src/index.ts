@@ -6,7 +6,6 @@ import { questions } from "./questions";
 
 /**
  * TODO: YOUTHBREAKER
- * - Turn Switching
  * - Question Picking - when turn changes, randomly pick a new question
  * - Question Tracking - using answered object
  * - UI
@@ -102,6 +101,37 @@ io.on("connection", (socket: Socket) => {
     io.to(roomId).emit("admin", { id: socket.id, turn: turn[roomId] });
     console.log(turn, "turn");
   });
+
+  // When switching turns
+  socket.on("turn", (roomId) => {
+    console.log("switch");
+
+    // If there is more than one member
+    if (list[roomId].members.length > 1) {
+      // If it's the last person in line
+      if (turn[roomId].index === list[roomId].members.length - 1) {
+        // Go back to the beginning of the list
+        turn[roomId] = {
+          member: list[roomId].members[0],
+          index: 0,
+        };
+
+        // ! There are some inconsistencies with roomId. Either have roomId be all string or all number but here we have it mixed
+        // ! Just too lazy to fix it
+        io.to(`${roomId}`).emit("switch", turn[roomId]);
+        console.log(turn[roomId], "yes");
+      } else {
+        // Otherwise go to the next person
+        turn[socket.data.roomId] = {
+          member: list[roomId].members[turn[roomId].index + 1],
+          index: turn[roomId].index + 1,
+        };
+        io.to(`${roomId}`).emit("switch", turn[roomId]);
+        console.log(turn[roomId], "yes");
+      }
+    }
+  });
+
   socket.on("disconnecting", async () => {
     console.log("disconnect");
 
@@ -123,11 +153,19 @@ io.on("connection", (socket: Socket) => {
     // Give someone else the turn
     let newTurn = Math.floor(Math.random() * (allSockets.length - 1));
 
-    console.log(list, "wow");
-    turn[socket.data.roomId] = {
-      member: list[socket.data.roomId].members[newTurn],
-      index: newTurn,
-    };
+    // if there is no one in the room, delete the turn
+    if (
+      !list[socket.data.roomId] ||
+      list[socket.data.roomId].members.length === 0
+    ) {
+      delete turn[socket.data.roomId];
+    } else {
+      // otherwise give the turn to someone else
+      turn[socket.data.roomId] = {
+        member: list[socket.data.roomId].members[newTurn],
+        index: newTurn,
+      };
+    }
 
     console.log(turn, "updated turn");
 
