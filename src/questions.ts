@@ -1,4 +1,4 @@
-type Questions = {
+export type Questions = {
   type: "normal" | "charades";
   category?:
     | "discovery"

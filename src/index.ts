@@ -4,10 +4,11 @@ import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
 import { questions } from "./questions";
 
+// * NOTE: I can't reset the questions that aren't answered
+
 /**
  * TODO: YOUTHBREAKER
- * - Question Picking - when turn changes, randomly pick a new question
- * - Question Tracking - using answered object
+ * - When there is no one in the room, reset answered
  * - UI
  */
 
@@ -31,6 +32,13 @@ type Turn = {
   };
 };
 
+type Question = {
+  [key: number]: {
+    roomId: number;
+    question: number;
+  };
+};
+
 type Answered = {
   [key: number]: {
     roomId: number;
@@ -42,6 +50,8 @@ type Answered = {
 let list: List = {};
 // Keeping track of who's turn it is
 let turn: Turn = {};
+
+let currentQuestion: Question = {};
 
 let answered: Answered = {};
 
@@ -96,9 +106,18 @@ io.on("connection", (socket: Socket) => {
         member: socket.id,
         index: list[roomId].members.findIndex((i) => i === socket.id),
       };
+
+      currentQuestion[roomId] = {
+        roomId,
+        question: Math.floor(Math.random() * (questions.length - 1)),
+      };
     }
 
-    io.to(roomId).emit("admin", { id: socket.id, turn: turn[roomId] });
+    io.to(roomId).emit("admin", {
+      id: socket.id,
+      turn: turn[roomId],
+      question: questions[currentQuestion[roomId].question],
+    });
     console.log(turn, "turn");
   });
 
@@ -108,6 +127,40 @@ io.on("connection", (socket: Socket) => {
 
     // If there is more than one member
     if (list[roomId].members.length > 1) {
+      // if the answered array exists
+      if (answered[roomId]) {
+        // add the question to the answered array
+        answered[roomId] = {
+          roomId,
+          answered: [
+            ...answered[roomId].answered,
+            currentQuestion[roomId].question,
+          ],
+        };
+      } else {
+        // otherwise initialize answered array
+        answered[roomId] = {
+          roomId,
+          answered: [currentQuestion[roomId].question],
+        };
+      }
+
+      // list of available questions
+      let available: number[] = [];
+
+      // filter out all available questions
+      questions.forEach((_, index) => {
+        if (!answered[roomId].answered.includes(index)) {
+          available.push(index);
+        }
+      });
+
+      // choose a random question from that list to be our new question
+      currentQuestion[roomId] = {
+        roomId,
+        question: available[Math.floor(Math.random() * (available.length - 1))],
+      };
+
       // If it's the last person in line
       if (turn[roomId].index === list[roomId].members.length - 1) {
         // Go back to the beginning of the list
@@ -118,7 +171,10 @@ io.on("connection", (socket: Socket) => {
 
         // ! There are some inconsistencies with roomId. Either have roomId be all string or all number but here we have it mixed
         // ! Just too lazy to fix it
-        io.to(`${roomId}`).emit("switch", turn[roomId]);
+        io.to(`${roomId}`).emit("switch", {
+          turn: turn[roomId],
+          question: questions[currentQuestion[roomId].question],
+        });
         console.log(turn[roomId], "yes");
       } else {
         // Otherwise go to the next person
@@ -126,7 +182,10 @@ io.on("connection", (socket: Socket) => {
           member: list[roomId].members[turn[roomId].index + 1],
           index: turn[roomId].index + 1,
         };
-        io.to(`${roomId}`).emit("switch", turn[roomId]);
+        io.to(`${roomId}`).emit("switch", {
+          turn: turn[roomId],
+          question: questions[currentQuestion[roomId].question],
+        });
         console.log(turn[roomId], "yes");
       }
     }
