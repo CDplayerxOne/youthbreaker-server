@@ -212,12 +212,14 @@ io.on("connection", (socket: Socket) => {
     // Give someone else the turn
     let newTurn = Math.floor(Math.random() * (allSockets.length - 1));
 
-    // if there is no one in the room, delete the turn
+    // if there is no one in the room, delete the turn and current question
     if (
       !list[socket.data.roomId] ||
       list[socket.data.roomId].members.length === 0
     ) {
       delete turn[socket.data.roomId];
+      delete currentQuestion[socket.data.roomId];
+      delete answered[socket.data.roomId];
     } else {
       // otherwise give the turn to someone else
       turn[socket.data.roomId] = {
