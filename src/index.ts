@@ -8,8 +8,8 @@ import { questions } from "./questions";
 
 /**
  * TODO: YOUTHBREAKER
- * - When there is no one in the room, reset answered
- * - UI
+ * - Clean it up
+ * - Optional: Make a cool home page
  */
 
 // Initializing Express server
