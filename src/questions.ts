@@ -7,7 +7,8 @@ export type Questions = {
     | "inclusion"
     | "teamwork"
     | "fun"
-    | "wellness";
+    | "wellness"
+    | "charades";
   question: string;
 };
 
@@ -37,8 +38,7 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "discovery",
-    question:
-      "What is the coolest thing you’ve learned from a mentor or a teammate?",
+    question:"What is the coolest thing you’ve learned from a mentor or a teammate?",
   },
   {
     type: "normal",
@@ -48,20 +48,17 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "innovation",
-    question:
-      "How would you deflate a 10 ft tall rubber duck in the shortest amount of time?",
+    question: "How would you deflate a 10 ft tall rubber duck in the shortest amount of time?",
   },
   {
     type: "normal",
     category: "innovation",
-    question:
-      "What new designs are you planning on adding to your robot this year?",
+    question: "What new designs are you planning on adding to your robot this year?",
   },
   {
     type: "normal",
     category: "innovation",
-    question:
-      "What part of your robot last season did you think was the most innovative part?",
+    question: "What part of your robot last season did you think was the most innovative part?",
   },
   {
     type: "normal",
@@ -91,8 +88,7 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "impact",
-    question:
-      "What have you learned from FIRST that you’ve used in another area in your life?",
+    question: "What have you learned from FIRST that you’ve used in another area in your life?",
   },
   {
     type: "normal",
@@ -189,14 +185,12 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "wellness",
-    question:
-      "Do you have any study habits that you’re using to study for midterm season?",
+    question: "Do you have any study habits that you’re using to study for midterm season?",
   },
   {
     type: "normal",
     category: "wellness",
-    question:
-      "Do you have any favourite activities or hobbies that make you happy?",
+    question: "Do you have any favourite activities or hobbies that make you happy?",
   },
   {
     type: "normal",
@@ -206,74 +200,17 @@ export let questions: Questions[] = [
   //   ! Placeholder Please change questions PLEASE
   {
     type: "charades",
-    question: "Apple",
+    category: "charades",
+    question: "Cone",
   },
   {
     type: "charades",
-    question: "Pear",
+    category: "charades",
+    question: "Wrench",
   },
   {
     type: "charades",
-    question: "Dinosaur",
-  },
-  {
-    type: "charades",
-    question: "Fish",
-  },
-  {
-    type: "charades",
-    question: "Monster",
-  },
-  {
-    type: "charades",
-    question: "Ghost",
-  },
-  {
-    type: "charades",
-    question: "Apple",
-  },
-  {
-    type: "charades",
-    question: "Pear",
-  },
-  {
-    type: "charades",
-    question: "Dinosaur",
-  },
-  {
-    type: "charades",
-    question: "Fish",
-  },
-  {
-    type: "charades",
-    question: "Monster",
-  },
-  {
-    type: "charades",
-    question: "Ghost",
-  },
-  {
-    type: "charades",
-    question: "Apple",
-  },
-  {
-    type: "charades",
-    question: "Pear",
-  },
-  {
-    type: "charades",
-    question: "Dinosaur",
-  },
-  {
-    type: "charades",
-    question: "Fish",
-  },
-  {
-    type: "charades",
-    question: "Monster",
-  },
-  {
-    type: "charades",
-    question: "Ghost",
+    category: "charades",
+    question: "Crescendo",
   },
 ];
