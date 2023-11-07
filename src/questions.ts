@@ -12,8 +12,6 @@ export type Questions = {
   question: string;
 };
 
-//  ! Head down to line 205 and change Charades Questions. THEY SUCK RIGHT NOW
-
 export let questions: Questions[] = [
   {
     type: "normal",
@@ -197,7 +195,7 @@ export let questions: Questions[] = [
     category: "wellness",
     question: "What item would you add to a quiet room?",
   },
-  //   ! Placeholder Please change questions PLEASE
+  //   ! Might change/add prompts later
   {
     type: "charades",
     category: "charades",
