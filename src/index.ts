@@ -119,6 +119,9 @@ io.on("connection", (socket: Socket) => {
       question: questions[currentQuestion[roomId].question],
     });
     console.log(turn, "turn");
+
+    io.emit("list", list);
+    io.emit("who", turn);
   });
 
   // When switching turns
@@ -188,6 +191,7 @@ io.on("connection", (socket: Socket) => {
         });
         console.log(turn[roomId], "yes");
       }
+      io.emit("who", turn);
     }
   });
 
@@ -227,6 +231,9 @@ io.on("connection", (socket: Socket) => {
         index: newTurn,
       };
     }
+
+    io.emit("list", list);
+    io.emit("who", turn);
 
     console.log(turn, "updated turn");
 
