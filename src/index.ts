@@ -61,7 +61,6 @@ const io = new Server(server, {
     origin: ["https://youthbreaker.vercel.app", "http://localhost:8574"],
     methods: ["GET", "POST"],
   },
-  allowEIO3: true, // false by default
 });
 
 // When a new user hops on
