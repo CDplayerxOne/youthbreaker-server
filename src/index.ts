@@ -59,6 +59,7 @@ const io = new Server(server, {
   // To prevent CORS errors
   cors: {
     origin: ["https://youthbreaker.vercel.app", "http://localhost:8574"],
+    methods: ["GET", "POST"],
   },
 });
 
