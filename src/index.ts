@@ -3,9 +3,14 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
 import { questions } from "./questions";
+// import cors from "cors";
 
 // Initializing Express server
 const app = express();
+
+// app.use(cors({
+//   origin: []
+// }))
 
 // Believe this server facilitates the socket.io connections
 const server = createServer(app);
@@ -51,7 +56,7 @@ let answered: Answered = {};
 const io = new Server(server, {
   // To prevent CORS errors
   cors: {
-    origin: ["https://youthbreaker.vercel.app:*", "http://localhost:8574:*"],
+    origin: ["https://youthbreaker.vercel.app", "http://localhost:8574"],
   },
 });
 
