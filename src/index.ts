@@ -3,14 +3,16 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
 import { questions } from "./questions";
-// import cors from "cors";
+import cors from "cors";
 
 // Initializing Express server
 const app = express();
 
-// app.use(cors({
-//   origin: []
-// }))
+app.use(
+  cors({
+    origin: ["https://youthbreaker.vercel.app", "http://localhost:8574"],
+  })
+);
 
 // Believe this server facilitates the socket.io connections
 const server = createServer(app);
