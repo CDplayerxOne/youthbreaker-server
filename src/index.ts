@@ -51,7 +51,7 @@ let answered: Answered = {};
 const io = new Server(server, {
   // To prevent CORS errors
   cors: {
-    origin: "http://localhost:8574",
+    origin: ["https://youthbreaker.vercel.app:*", "http://localhost:8574:*"],
   },
 });
 
