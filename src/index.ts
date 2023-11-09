@@ -4,14 +4,6 @@ import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
 import { questions } from "./questions";
 
-// * NOTE: I can't reset the questions that aren't answered
-
-/**
- * TODO: YOUTHBREAKER
- * - Clean it up
- * - Optional: Make a cool home page
- */
-
 // Initializing Express server
 const app = express();
 
