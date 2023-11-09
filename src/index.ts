@@ -196,6 +196,11 @@ io.on("connection", (socket: Socket) => {
     }
   });
 
+  socket.on("in", () => {
+    io.emit("who", turn);
+    io.emit("list", list);
+  });
+
   socket.on("disconnecting", async () => {
     console.log("disconnect");
 
