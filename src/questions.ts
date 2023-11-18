@@ -36,7 +36,8 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "discovery",
-    question:"What is the coolest thing you’ve learned from a mentor or a teammate?",
+    question:
+      "What is the coolest thing you’ve learned from a mentor or a teammate?",
   },
   {
     type: "normal",
@@ -46,17 +47,20 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "innovation",
-    question: "How would you deflate a 10 ft tall rubber duck in the shortest amount of time?",
+    question:
+      "How would you deflate a 10 ft tall rubber duck in the shortest amount of time?",
   },
   {
     type: "normal",
     category: "innovation",
-    question: "What new designs are you planning on adding to your robot this year?",
+    question:
+      "What new designs are you planning on adding to your robot this year?",
   },
   {
     type: "normal",
     category: "innovation",
-    question: "What part of your robot last season did you think was the most innovative part?",
+    question:
+      "What part of your robot last season did you think was the most innovative part?",
   },
   {
     type: "normal",
@@ -86,7 +90,8 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "impact",
-    question: "What have you learned from FIRST that you’ve used in another area in your life?",
+    question:
+      "What have you learned from FIRST that you’ve used in another area in your life?",
   },
   {
     type: "normal",
@@ -111,23 +116,7 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "teamwork",
-    question:
-      "Human knot!! (people holding hands and feet and twisting in a circle) for 15s",
-  },
-  {
-    type: "normal",
-    category: "teamwork",
     question: "Broken telephone",
-  },
-  {
-    type: "normal",
-    category: "teamwork",
-    question: "Charades round (cardholder picks FIRST related prompt)",
-  },
-  {
-    type: "normal",
-    category: "teamwork",
-    question: "Pictionary (if they give notebooks like kingsbridge did)",
   },
   {
     type: "normal",
@@ -183,12 +172,14 @@ export let questions: Questions[] = [
   {
     type: "normal",
     category: "wellness",
-    question: "Do you have any study habits that you’re using to study for midterm season?",
+    question:
+      "Do you have any study habits that you’re using to study for midterm season?",
   },
   {
     type: "normal",
     category: "wellness",
-    question: "Do you have any favourite activities or hobbies that make you happy?",
+    question:
+      "Do you have any favourite activities or hobbies that make you happy?",
   },
   {
     type: "normal",
@@ -196,19 +187,4 @@ export let questions: Questions[] = [
     question: "What item would you add to a quiet room?",
   },
   //   ! Might change/add prompts later
-  {
-    type: "charades",
-    category: "charades",
-    question: "Cone",
-  },
-  {
-    type: "charades",
-    category: "charades",
-    question: "Wrench",
-  },
-  {
-    type: "charades",
-    category: "charades",
-    question: "Crescendo",
-  },
 ];
